@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { DataService } from '../data/data.service';
 import { UserSettings } from '../data/user-settings';
 
 
@@ -19,9 +21,15 @@ export class UserSettingsFormComponent implements OnInit {
 
   userSettings : UserSettings = { ...this.originalUserSettings}
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+  }
+
+  onSubmit(form: NgForm) {
+    console.log('in onSubmit: ', form.valid);
+    this.dataService.postUserSettingsForm(this.userSettings).subscribe(result => console.log('success: ', result),
+    );
   }
 
 }
